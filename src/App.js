@@ -1,26 +1,30 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React, {useState} from 'react';
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+//add login form
+const Login = ({username, password, setUsername, setPassword}) => {
+	// const handleChange = (event.target)=>
+	
+	return(
+		<div>
+			<h2>log in to application</h2>
+			<form>
+				<div>username <input type='text' name='username' value={username} onChange={e=>setUsername(e.target.value)}/></div>
+				<div>password <input type='text' name='password' value={password} onChange={e=>setPassword(e.target.value)}/></div>
+			</form>
+		</div>
+	)
+}
+
+
+const App = () => {
+	const [username, setUsername] = useState('')
+	const [password, setPassword] = useState('')
+	console.log(`username:${username} || password:${password}`)
+	return (
+	<div className="App">
+	  <Login username={username} setUsername={setUsername} password={password} setPassword={setPassword}/>
+	</div>
+	);
 }
 
 export default App;
