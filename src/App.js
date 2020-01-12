@@ -8,8 +8,9 @@ const Login = ({username, password, user, setUsername, setPassword, setUser}) =>
 		e.preventDefault()
 		console.log("logging in with", username, password)
 		try{
-			const user = await blogService.login({username, password})
+			const user = await blogService.login({username, password})			
 			setUser(user)
+      		window.localStorage.setItem('loggedBlogappUser', JSON.stringify(user)) 			
 			setUsername('')
 			setPassword('')
 			console.log(user)
@@ -30,17 +31,21 @@ const Login = ({username, password, user, setUsername, setPassword, setUser}) =>
 	)
 }//Login
 // ********************************************************************************************************
-const PostLoginMessage = ({user})=>{
-	return(<div><p>{user.name} logged in</p></div>)
+const LogoutButton = ({setUser})=>{
+	return <button onClick={()=>{window.localStorage.removeItem('loggedBlogappUser'); setUser(null);}}>logout</button>
 }
 // ********************************************************************************************************
-const Blogs = ({blogs,setBlogs, user})=>{
+const PostLoginMessage = ({user,setUser})=>{
+	return(<div><p>{user.name} logged in<LogoutButton setUser={setUser}/></p></div>)
+}
+// ********************************************************************************************************
+const Blogs = ({blogs,setBlogs, user,setUser})=>{
 	useEffect(()=>{ blogService.getAll().then(newBlogs=>setBlogs(newBlogs.map(b=><div key={b.id}>{b.title} {b.author} {b.user.username}</div>)))
 	}, [])
 	return(
 		<div>
 			<h2>blogs</h2>
-			<PostLoginMessage user={user}/>
+			<PostLoginMessage user={user} setUser={setUser}/>
 			<div>{blogs}</div>
 		</div>	
 	)
@@ -52,13 +57,22 @@ const App = () => {
 	const [user, setUser] = useState(null)
 	const [blogs, setBlogs] = useState([])
 	
+	useEffect(()=>{
+		const loggedUserJSON = window.localStorage.getItem('loggedBlogappUser')
+		if(loggedUserJSON){
+			const user = JSON.parse(loggedUserJSON)
+			setUser(user)
+			// blogService.setToken(user.token)
+		}
+	})
+	
 	const frontpage = ()=>{
 		if(user === null){
 			return <Login username={username} setUsername={setUsername} password={password} setPassword={setPassword} user={user} setUser={setUser} />		
 		}
-		return <Blogs blogs={blogs} setBlogs={setBlogs} user={user}/>
+		return <Blogs blogs={blogs} setBlogs={setBlogs} user={user} setUser={setUser}/>
 	}
-	console.log(`username:${username} || password:${password}`)
+	// console.log(`username:${username} || password:${password}`)
 	return (
 	<div className="App">
 	  {frontpage()}
