@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useState, useEffect} from 'react';
 import blogService from './services/blogs'
 
 //add login form
@@ -28,18 +28,35 @@ const Login = ({username, password, user, setUsername, setPassword, setUser}) =>
 			</form>
 		</div>
 	)
-}
+}//Login
 
+const Blogs = ({blogs,setBlogs})=>{
+	useEffect((setBlogs)=>{ blogService.getAll().then(newBlogs=>setBlogs(newBlogs.map(b=><div key={b.id}>{b.title} {b.author}</div>)))
+	}, [])
+	return(
+		<div>
+			<h2>blogs</h2>
+			<div>{blogs}</div>
+		</div>	
+	)
+}//Blogs
 
 const App = () => {
 	const [username, setUsername] = useState('')
 	const [password, setPassword] = useState('')
-	const [user, setUser] = useState('')
+	const [user, setUser] = useState(null)
+	const [blogs, setBlogs] = useState([])
 	
+	const frontpage = ()=>{
+		if(user === null){
+			return <Login username={username} setUsername={setUsername} password={password} setPassword={setPassword} user={user} setUser={setUser} />		
+		}
+		return <Blogs blogs={blogs} setBlogs={setBlogs}/>
+	}
 	console.log(`username:${username} || password:${password}`)
 	return (
 	<div className="App">
-	  <Login username={username} setUsername={setUsername} password={password} setPassword={setPassword} user={user} setUser={setUser} />
+	  {frontpage()}
 	</div>
 	);
 }
