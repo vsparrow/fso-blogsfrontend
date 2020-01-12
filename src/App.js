@@ -46,10 +46,25 @@ const Blogs = ({blogs,setBlogs, user,setUser})=>{
 		<div>
 			<h2>blogs</h2>
 			<PostLoginMessage user={user} setUser={setUser}/>
+			<NewBlogsForm />
+			<p></p>
 			<div>{blogs}</div>
 		</div>	
 	)
 }//Blogs
+// ********************************************************************************************************
+const NewBlogsForm = () => {
+	return(
+		<div>
+			<h2>create new</h2>
+			<form>
+				<div>title:<input /></div>
+				<div>author:<input /></div>
+				<div>url:<input /></div>
+			</form>
+		</div>
+	)		
+}  
 // ********************************************************************************************************
 const App = () => {
 	const [username, setUsername] = useState('')
@@ -70,7 +85,11 @@ const App = () => {
 		if(user === null){
 			return <Login username={username} setUsername={setUsername} password={password} setPassword={setPassword} user={user} setUser={setUser} />		
 		}
-		return <Blogs blogs={blogs} setBlogs={setBlogs} user={user} setUser={setUser}/>
+		return (
+			<div>				
+				<Blogs blogs={blogs} setBlogs={setBlogs} user={user} setUser={setUser}/>
+			</div>
+		)
 	}
 	// console.log(`username:${username} || password:${password}`)
 	return (
