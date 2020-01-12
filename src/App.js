@@ -46,21 +46,38 @@ const Blogs = ({blogs,setBlogs, user,setUser})=>{
 		<div>
 			<h2>blogs</h2>
 			<PostLoginMessage user={user} setUser={setUser}/>
-			<NewBlogsForm />
+			<NewBlogsForm user={user}/>
 			<p></p>
 			<div>{blogs}</div>
 		</div>	
 	)
 }//Blogs
 // ********************************************************************************************************
-const NewBlogsForm = () => {
+const NewBlogsForm = ({user}) => {
+	const [title,setTitle] = useState('')
+	const [author,setAuthor] = useState('')
+	const [url,setUrl] = useState('')	
+	
+	const createHandler = (e) => { 
+		e.preventDefault()
+		console.log("hello")
+		const newBlogData = {title,url,author, token: user.token}
+		console.log(newBlogData)
+		//post the blog
+		
+		setTitle('')
+		setAuthor('')
+		setUrl('')
+	}
+	
 	return(
 		<div>
 			<h2>create new</h2>
 			<form>
-				<div>title:<input /></div>
-				<div>author:<input /></div>
-				<div>url:<input /></div>
+				<div>title:<input type='text' name='title' value={title} onChange={e=>setTitle(e.target.value)}/></div>
+				<div>author:<input type='text' name='author' value={author} onChange={e=>setAuthor(e.target.value)}/></div>
+				<div>url:<input type='text' name='url' value={url} onChange={e=>setUrl(e.target.value)}/></div>
+				<button onClick={createHandler}>create</button>
 			</form>
 		</div>
 	)		
@@ -79,7 +96,7 @@ const App = () => {
 			setUser(user)
 			// blogService.setToken(user.token)
 		}
-	})
+	},[])
 	
 	const frontpage = ()=>{
 		if(user === null){
@@ -91,7 +108,6 @@ const App = () => {
 			</div>
 		)
 	}
-	// console.log(`username:${username} || password:${password}`)
 	return (
 	<div className="App">
 	  {frontpage()}
