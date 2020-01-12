@@ -1,6 +1,6 @@
 import React, {useState, useEffect} from 'react';
 import blogService from './services/blogs'
-
+// ********************************************************************************************************
 //add login form
 const Login = ({username, password, user, setUsername, setPassword, setUser}) => {
 	// const handleChange = (event.target)=>
@@ -29,18 +29,23 @@ const Login = ({username, password, user, setUsername, setPassword, setUser}) =>
 		</div>
 	)
 }//Login
-
-const Blogs = ({blogs,setBlogs})=>{
-	useEffect((setBlogs)=>{ blogService.getAll().then(newBlogs=>setBlogs(newBlogs.map(b=><div key={b.id}>{b.title} {b.author}</div>)))
+// ********************************************************************************************************
+const PostLoginMessage = ({user})=>{
+	return(<div><p>{user.name} logged in</p></div>)
+}
+// ********************************************************************************************************
+const Blogs = ({blogs,setBlogs, user})=>{
+	useEffect(()=>{ blogService.getAll().then(newBlogs=>setBlogs(newBlogs.map(b=><div key={b.id}>{b.title} {b.author} {b.user.username}</div>)))
 	}, [])
 	return(
 		<div>
 			<h2>blogs</h2>
+			<PostLoginMessage user={user}/>
 			<div>{blogs}</div>
 		</div>	
 	)
 }//Blogs
-
+// ********************************************************************************************************
 const App = () => {
 	const [username, setUsername] = useState('')
 	const [password, setPassword] = useState('')
@@ -51,7 +56,7 @@ const App = () => {
 		if(user === null){
 			return <Login username={username} setUsername={setUsername} password={password} setPassword={setPassword} user={user} setUser={setUser} />		
 		}
-		return <Blogs blogs={blogs} setBlogs={setBlogs}/>
+		return <Blogs blogs={blogs} setBlogs={setBlogs} user={user}/>
 	}
 	console.log(`username:${username} || password:${password}`)
 	return (
