@@ -4,6 +4,13 @@ import Login from './components/Login'
 import Blog from './components/Blog'
 
 // *********************************************************************************************
+const Message = ({message, setMessage}) => {
+	if(message.length === 0){ return <div></div>}
+	setTimeout(()=>{setMessage('')},5000)
+	return <div><h2>{message}</h2></div>
+}
+
+// *********************************************************************************************
 const LogoutButton = ({setUser})=>{
 	return <button onClick={()=>{window.localStorage.removeItem('loggedBlogappUser'); setUser(null);}}>logout</button>
 }
@@ -12,12 +19,15 @@ const PostLoginMessage = ({user,setUser})=>{
 	return(<div><p>{user.name} logged in<LogoutButton setUser={setUser}/></p></div>)
 }
 // *********************************************************************************************
-const BlogsComponent = ({blogs,setBlogs, user,setUser})=>{
+const BlogsComponent = ({blogs,setBlogs, user,setUser, message, setMessage})=>{
 	return(
 		<div>
 			<h2>blogs</h2>
+			<Message message={message} setMessage={setMessage} />
 			<PostLoginMessage user={user} setUser={setUser}/>
-			<NewBlogsForm user={user} blogs={blogs} setBlogs={setBlogs}/>
+			<NewBlogsForm user={user} blogs={blogs} setBlogs={setBlogs} message={message}
+				setMessage={setMessage}	
+			/>
 			<p></p>
 			<div>{"blogs"}</div>
 			<div>{blogs.map((blog,index)=><Blog key={index} blog={blog}/>)}</div>
@@ -25,7 +35,7 @@ const BlogsComponent = ({blogs,setBlogs, user,setUser})=>{
 	)
 }//Blogs
 //***********************************************************************************************
-const NewBlogsForm = ({user,blogs,setBlogs}) => {
+const NewBlogsForm = ({user,blogs,setBlogs,message, setMessage}) => {
 	const [title,setTitle] = useState('')
 	const [author,setAuthor] = useState('')
 	const [url,setUrl] = useState('')	
@@ -40,6 +50,7 @@ const NewBlogsForm = ({user,blogs,setBlogs}) => {
 			const results = await blogService.postBlog(newBlogData, user.token) //******
 			console.log("results are,", results)
 			setBlogs(blogs.concat(results))
+			setMessage(`a new blog ${results.title} by ${results.author} added`)
 		}catch(error){console.log(error)}	
 		setTitle('')
 		setAuthor('')
@@ -65,6 +76,7 @@ const App = () => {
 	const [password, setPassword] = useState('')
 	const [user, setUser] = useState(null)
 	const [blogs, setBlogs] = useState([])
+	const [message, setMessage] = useState('')
 	//************************************************************* EFFECT
 	useEffect(() => {
     	blogService.getAll().then(data => {console.log("data is",data);setBlogs(data)})
@@ -91,7 +103,14 @@ const App = () => {
 				/>
 	}
 	//else
-	return (<BlogsComponent blogs={blogs} setBlogs={setBlogs} user={user} setUser={setUser} /> )
+	return (<BlogsComponent 
+				blogs={blogs} 
+				setBlogs={setBlogs} 
+				user={user} 
+				setUser={setUser}
+				message={message}
+				setMessage={setMessage}
+			/> )
 }
 
 export default App;
