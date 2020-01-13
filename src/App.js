@@ -1,23 +1,20 @@
 import React, {useState, useEffect} from 'react';
 import blogService from './services/blogs'
-import Blog from './components/Blog'
-// ********************************************************************************************************
-//add login form
+
+// **********************************************************************************************
+//login form
 const Login = ({username, password, user, setUsername, setPassword, setUser}) => {
-	// const handleChange = (event.target)=>
 	const handleLogin = async (e)=>{
 		e.preventDefault()
-		console.log("logging in with", username, password)
 		try{
 			const user = await blogService.login({username, password})			
 			setUser(user)
       		window.localStorage.setItem('loggedBlogappUser', JSON.stringify(user)) 			
 			setUsername('')
 			setPassword('')
-			console.log(user)
 		}
 		catch(exception){
-				
+			console.log(exception.message)	
 		}
 	}
 	return(
@@ -31,31 +28,16 @@ const Login = ({username, password, user, setUsername, setPassword, setUser}) =>
 		</div>
 	)
 }//Login
-// ********************************************************************************************************
+// *********************************************************************************************
 const LogoutButton = ({setUser})=>{
 	return <button onClick={()=>{window.localStorage.removeItem('loggedBlogappUser'); setUser(null);}}>logout</button>
 }
-// ********************************************************************************************************
+// *********************************************************************************************
 const PostLoginMessage = ({user,setUser})=>{
 	return(<div><p>{user.name} logged in<LogoutButton setUser={setUser}/></p></div>)
 }
-// ********************************************************************************************************
+// *********************************************************************************************
 const BlogsComponent = ({blogs,setBlogs, user,setUser})=>{
-	// const showBlogs = blogs => blogs.map(b=><Blog blog={b}/>)
-	// console.log("BlogsComponent loaded")
-	// console.log("blogs",blogs)
-	// console.log("setBlogs",setBlogs)
-	// console.log("user",user)
-	// console.log("setUser",setUser)
-	// const showBlogs = blogs => {
-	// 	console.log("blogs in BlogsComponent.showBlogs is", blogs)
-
-	// 	if(blogs !== undefined){ return blogs.map(b=><li>blog</li>)}
-	// 	console.log("blogs in BlogsComponent.showBlogs.if is", blogs)
-
-	// 	return <div>?</div>
-	// }
-									
 	return(
 		<div>
 			<h2>blogs</h2>
@@ -66,9 +48,8 @@ const BlogsComponent = ({blogs,setBlogs, user,setUser})=>{
 			<div>{blogs.map((blog,index)=><li key={index}>{blog.title}</li>)}</div>
 		</div>	
 	)
-					// <div>{blogs.length === 0 ? "blogs here" : showBlogs()}</div>
 }//Blogs
-// ********************************************************************************************************
+//***********************************************************************************************
 const NewBlogsForm = ({user,blogs,setBlogs}) => {
 	const [title,setTitle] = useState('')
 	const [author,setAuthor] = useState('')
@@ -102,30 +83,23 @@ const NewBlogsForm = ({user,blogs,setBlogs}) => {
 		</div>
 	)		
 }  
-// ********************************************************************************************************
+//***********************************************************************************************
 const App = () => {
+	//************************************************************* variables
 	const [username, setUsername] = useState('')
 	const [password, setPassword] = useState('')
 	const [user, setUser] = useState(null)
 	const [blogs, setBlogs] = useState([])
 	//************************************************************* EFFECT
 	useEffect(() => {
-    // blogService.getAll().then(initialBlogs => setBlogs(initialBlogs))
-    blogService.getAll().then(data => {console.log("data is",data);setBlogs(data)})
-		// .then(initialBlogs => initialBlogs.map(b=>({title: b.title, author: b.author})))
-		// // .then(mappedBlogs => {console.log(typeof mappedBlogs); 
-		// // 					  console.log(Array.isArray( mappedBlogs));
-		// // 					  console.log(mappedBlogs)})	
-		// .then(mappedBlogs => setBlogs(mappedBlogs)) 
-	  	
-  }, [])
+    	blogService.getAll().then(data => {console.log("data is",data);setBlogs(data)})
+  	}, [])
 	
 	useEffect(()=>{
 		const loggedUserJSON = window.localStorage.getItem('loggedBlogappUser')
 		if(loggedUserJSON){
 			const user = JSON.parse(loggedUserJSON)
 			setUser(user)
-			// blogService.setToken(user.token)
 			blogService.getAll()
 		}
 	},[])
@@ -143,10 +117,6 @@ const App = () => {
 	}
 	//else
 	return (<BlogsComponent blogs={blogs} setBlogs={setBlogs} user={user} setUser={setUser} /> )
-	
-	// return (<div className="App">"logged in"</div>);
-	// return <div>{blogs.length}</div>
-	// return <div>{blogs.map((blog,index)=><li key={index}>{blog.title}</li>)}</div>
 }
 
 export default App;
