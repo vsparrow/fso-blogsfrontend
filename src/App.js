@@ -1,5 +1,6 @@
 import React, {useState, useEffect} from 'react';
 import blogService from './services/blogs'
+import Blog from './components/Blog'
 // ********************************************************************************************************
 //add login form
 const Login = ({username, password, user, setUsername, setPassword, setUser}) => {
@@ -39,21 +40,36 @@ const PostLoginMessage = ({user,setUser})=>{
 	return(<div><p>{user.name} logged in<LogoutButton setUser={setUser}/></p></div>)
 }
 // ********************************************************************************************************
-const Blogs = ({blogs,setBlogs, user,setUser})=>{
-	useEffect(()=>{ blogService.getAll().then(newBlogs=>setBlogs(newBlogs.map(b=><div key={b.id}>{b.title} {b.author} {b.user.username}</div>)))
-	}, [])
+const BlogsComponent = ({blogs,setBlogs, user,setUser})=>{
+	// const showBlogs = blogs => blogs.map(b=><Blog blog={b}/>)
+	// console.log("BlogsComponent loaded")
+	// console.log("blogs",blogs)
+	// console.log("setBlogs",setBlogs)
+	// console.log("user",user)
+	// console.log("setUser",setUser)
+	// const showBlogs = blogs => {
+	// 	console.log("blogs in BlogsComponent.showBlogs is", blogs)
+
+	// 	if(blogs !== undefined){ return blogs.map(b=><li>blog</li>)}
+	// 	console.log("blogs in BlogsComponent.showBlogs.if is", blogs)
+
+	// 	return <div>?</div>
+	// }
+									
 	return(
 		<div>
 			<h2>blogs</h2>
 			<PostLoginMessage user={user} setUser={setUser}/>
-			<NewBlogsForm user={user}/>
+			<NewBlogsForm user={user} blogs={blogs} setBlogs={setBlogs}/>
 			<p></p>
-			<div>{blogs}</div>
+			<div>{"blogs"}</div>
+			<div>{blogs.map((blog,index)=><li key={index}>{blog.title}</li>)}</div>
 		</div>	
 	)
+					// <div>{blogs.length === 0 ? "blogs here" : showBlogs()}</div>
 }//Blogs
 // ********************************************************************************************************
-const NewBlogsForm = ({user}) => {
+const NewBlogsForm = ({user,blogs,setBlogs}) => {
 	const [title,setTitle] = useState('')
 	const [author,setAuthor] = useState('')
 	const [url,setUrl] = useState('')	
@@ -67,6 +83,7 @@ const NewBlogsForm = ({user}) => {
 		try{
 			const results = await blogService.postBlog(newBlogData, user.token) //******
 			console.log("results are,", results)
+			setBlogs(blogs.concat(results))
 		}catch(error){console.log(error)}	
 		setTitle('')
 		setAuthor('')
@@ -91,6 +108,17 @@ const App = () => {
 	const [password, setPassword] = useState('')
 	const [user, setUser] = useState(null)
 	const [blogs, setBlogs] = useState([])
+	//************************************************************* EFFECT
+	useEffect(() => {
+    // blogService.getAll().then(initialBlogs => setBlogs(initialBlogs))
+    blogService.getAll().then(data => {console.log("data is",data);setBlogs(data)})
+		// .then(initialBlogs => initialBlogs.map(b=>({title: b.title, author: b.author})))
+		// // .then(mappedBlogs => {console.log(typeof mappedBlogs); 
+		// // 					  console.log(Array.isArray( mappedBlogs));
+		// // 					  console.log(mappedBlogs)})	
+		// .then(mappedBlogs => setBlogs(mappedBlogs)) 
+	  	
+  }, [])
 	
 	useEffect(()=>{
 		const loggedUserJSON = window.localStorage.getItem('loggedBlogappUser')
@@ -98,24 +126,27 @@ const App = () => {
 			const user = JSON.parse(loggedUserJSON)
 			setUser(user)
 			// blogService.setToken(user.token)
+			blogService.getAll()
 		}
 	},[])
 	
-	const frontpage = ()=>{
-		if(user === null){
-			return <Login username={username} setUsername={setUsername} password={password} setPassword={setPassword} user={user} setUser={setUser} />		
-		}
-		return (
-			<div>				
-				<Blogs blogs={blogs} setBlogs={setBlogs} user={user} setUser={setUser}/>
-			</div>
-		)
+	//************************************************************* RENDERING
+	if(user === null){ 
+		return <Login 
+				   username={username} 
+				   setUsername={setUsername} 
+				   password={password} 
+				   setPassword={setPassword} 
+				   user={user} 
+				   setUser={setUser} 
+				/>
 	}
-	return (
-	<div className="App">
-	  {frontpage()}
-	</div>
-	);
+	//else
+	return (<BlogsComponent blogs={blogs} setBlogs={setBlogs} user={user} setUser={setUser} /> )
+	
+	// return (<div className="App">"logged in"</div>);
+	// return <div>{blogs.length}</div>
+	// return <div>{blogs.map((blog,index)=><li key={index}>{blog.title}</li>)}</div>
 }
 
 export default App;
