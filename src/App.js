@@ -1,34 +1,9 @@
 import React, {useState, useEffect} from 'react';
 import blogService from './services/blogs'
 import Login from './components/Login'
-// **********************************************************************************************
-// //login form
-// const Login = ({username, password, user, setUsername, setPassword, setUser}) => {
-// 	const handleLogin = async (e)=>{
-// 		e.preventDefault()
-// 		try{
-// 			const user = await blogService.login({username, password})			
-// 			setUser(user)
-//       		window.localStorage.setItem('loggedBlogappUser', JSON.stringify(user)) 			
-// 			setUsername('')
-// 			setPassword('')
-// 		}
-// 		catch(exception){
-// 			console.log(exception.message)	
-// 		}
-// 	}
-// 	return(
-// 		<div>
-// 			<h2>log in to application</h2>
-// 			<form onSubmit={handleLogin}>
-// 				<div>username <input type='text' name='username' value={username} onChange={e=>setUsername(e.target.value)}/></div>
-// 				<div>password <input type='text' name='password' value={password} onChange={e=>setPassword(e.target.value)}/></div>
-// 				<button type='submit'>login</button>
-// 			</form>
-// 		</div>
-// 	)
-// }//Login
-// // *********************************************************************************************
+import Blog from './components/Blog'
+
+// *********************************************************************************************
 const LogoutButton = ({setUser})=>{
 	return <button onClick={()=>{window.localStorage.removeItem('loggedBlogappUser'); setUser(null);}}>logout</button>
 }
@@ -45,7 +20,7 @@ const BlogsComponent = ({blogs,setBlogs, user,setUser})=>{
 			<NewBlogsForm user={user} blogs={blogs} setBlogs={setBlogs}/>
 			<p></p>
 			<div>{"blogs"}</div>
-			<div>{blogs.map((blog,index)=><li key={index}>{blog.title}</li>)}</div>
+			<div>{blogs.map((blog,index)=><Blog key={index} blog={blog}/>)}</div>
 		</div>	
 	)
 }//Blogs
