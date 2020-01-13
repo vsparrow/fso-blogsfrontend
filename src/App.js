@@ -58,13 +58,16 @@ const NewBlogsForm = ({user}) => {
 	const [author,setAuthor] = useState('')
 	const [url,setUrl] = useState('')	
 	
-	const createHandler = (e) => { 
+	const createHandler = async (e) => { 
 		e.preventDefault()
 		console.log("hello")
-		const newBlogData = {title,url,author, token: user.token}
+		const newBlogData = {title,url,author}
 		console.log(newBlogData)
 		//post the blog
-		
+		try{
+			const results = await blogService.postBlog(newBlogData, user.token) //******
+			console.log("results are,", results)
+		}catch(error){console.log(error)}	
 		setTitle('')
 		setAuthor('')
 		setUrl('')

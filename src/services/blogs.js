@@ -17,4 +17,12 @@ const login = async credentials => {
 	return response.data
 }
 
-export default { getAll, login }
+const postBlog =  async (newBlogData,token) => {
+	const setToken = `bearer ${token}`
+	const headers = { headers: {Authorization: setToken} }
+	const response = await axios.post(baseUrl + '/api/blogs', newBlogData, headers)
+	console.log('response ins', response)
+	return response.data
+}
+
+export default { getAll, login, postBlog }
