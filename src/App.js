@@ -2,16 +2,19 @@ import React, {useState, useEffect} from 'react';
 import blogService from './services/blogs'
 import Login from './components/Login'
 import Blog from './components/Blog'
-
+import Message from './components/Message'
 // *********************************************************************************************
-const Message = ({message, setMessage}) => {
-	if(message.length === 0){ return <div></div>}
-	setTimeout(()=>{setMessage('')},5000)
-	if(message.substr(0,10)==='a new blog'){
-		return <div className='message'><h2>{message}</h2></div>		
-	}
-	return <div className='error'><h2>{message}</h2></div>
-}
+// const Message = ({message, setMessage}) => {
+// 	if(message.length === 0){ return <div></div>}
+// 	setTimeout(()=>{setMessage('')},5000)
+// 	if(message.substr(0,10)==='a new blog'){
+// 		return <div className='message'><h2>{message}</h2></div>		
+// 	}
+// 	// if(message==='Username or Password incorrect'){
+		
+// 	// }
+// 	return <div className='error'><h2>{message}</h2></div>
+// }
 
 // *********************************************************************************************
 const LogoutButton = ({setUser})=>{
@@ -54,7 +57,7 @@ const NewBlogsForm = ({user,blogs,setBlogs,message, setMessage}) => {
 			console.log("results are,", results)
 			setBlogs(blogs.concat(results))
 			setMessage(`a new blog ${results.title} by ${results.author} added`)
-		}catch(error){console.log(error)}	
+		}catch(error){setMessage('error adding blog')}	
 		setTitle('')
 		setAuthor('')
 		setUrl('')
@@ -102,7 +105,9 @@ const App = () => {
 				   password={password} 
 				   setPassword={setPassword} 
 				   user={user} 
-				   setUser={setUser} 
+				   setUser={setUser}
+				   message={message}
+				   setMessage={setMessage}
 				/>
 	}
 	//else
