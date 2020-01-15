@@ -27,11 +27,10 @@ const Toggable = (props) => {
 	return(
 		<div>
 			<div style={hideWhenVisible}>
-				hideWhenVisible
 				<button onClick={toggleVisibility}>{props.buttonLabel}</button>
 			</div>
 			<div style={showWhenVisible}>
-				showWhenVisible
+				{props.children}
 				<button onClick={toggleVisibility}>cancel</button>
 			</div>
 		</div>
@@ -50,12 +49,13 @@ const BlogsComponent = ({blogs,setBlogs, user,setUser, message, setMessage})=>{
 	return(
 		<div>
 			<h2>blogs</h2>
-			<Toggable buttonLabel={'this_is_a_button_label omg camel case'} />
 			<Message message={message} setMessage={setMessage} />
 			<PostLoginMessage user={user} setUser={setUser}/>
-			<NewBlogsForm user={user} blogs={blogs} setBlogs={setBlogs} message={message}
+			<Toggable buttonLabel={'Add a new blog'}>
+				<NewBlogsForm user={user} blogs={blogs} setBlogs={setBlogs} message={message}
 				setMessage={setMessage}	
-			/>
+				/>
+			</Toggable>	
 			<p></p>
 			<div>{"blogs"}</div>
 			<div>{blogs.map((blog,index)=><Blog key={index} blog={blog}/>)}</div>
