@@ -17,6 +17,27 @@ import Message from './components/Message'
 // }
 
 // *********************************************************************************************
+const Toggable = (props) => {
+	const [visible, setVisible] = useState(false)
+	const hideWhenVisible = { display: visible ? 'none' : ''}
+	const showWhenVisible = { display: visible ? '' : 'none'}
+	
+	const toggleVisibility = () => { setVisible(!visible)}
+	
+	return(
+		<div>
+			<div style={hideWhenVisible}>
+				hideWhenVisible
+				<button onClick={toggleVisibility}>{props.buttonLabel}</button>
+			</div>
+			<div style={showWhenVisible}>
+				showWhenVisible
+				<button onClick={toggleVisibility}>cancel</button>
+			</div>
+		</div>
+	)
+}
+// *********************************************************************************************
 const LogoutButton = ({setUser})=>{
 	return <button onClick={()=>{window.localStorage.removeItem('loggedBlogappUser'); setUser(null);}}>logout</button>
 }
@@ -29,6 +50,7 @@ const BlogsComponent = ({blogs,setBlogs, user,setUser, message, setMessage})=>{
 	return(
 		<div>
 			<h2>blogs</h2>
+			<Toggable buttonLabel={'this_is_a_button_label omg camel case'} />
 			<Message message={message} setMessage={setMessage} />
 			<PostLoginMessage user={user} setUser={setUser}/>
 			<NewBlogsForm user={user} blogs={blogs} setBlogs={setBlogs} message={message}
