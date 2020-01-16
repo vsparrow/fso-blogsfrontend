@@ -30,6 +30,7 @@ const Blog = ({ blog, user, blogs, setBlogs }) => {
 			if(b.id !==blog.id){return b}
 			return returnedBlog
 		})
+		setShowDetails(!showDetails)
 		setBlogs(updatedBlogs)
 	}
 	
