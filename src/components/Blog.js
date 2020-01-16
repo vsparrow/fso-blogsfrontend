@@ -34,6 +34,17 @@ const Blog = ({ blog, user, blogs, setBlogs }) => {
 		setBlogs(updatedBlogs)
 	}
 	
+	const DeleteButton = ({user,blog})=>{
+		//make another user to test this!
+
+		const handleClick=(e)=>{ 
+			e.stopPropagation() 
+		}
+		//show different things based on username
+		if(blog.user.username !== user.username){return <div></div>}
+		return <button onClick={handleClick}>remove</button>
+	}
+	
 	return(
 		<div>
 			<div style={Object.assign(noDetails,blogStyle )} onClick={handleClick}>
@@ -44,6 +55,7 @@ const Blog = ({ blog, user, blogs, setBlogs }) => {
 				<div>{blog.url}</div>
 				<div>{blog.likes} likes<button onClick={handleLikeClick}>like</button></div>
 				<div>add by {blog.user.name}</div>
+				<DeleteButton blog={blog} user={user}/>
 			</div>
 		</div>
 
