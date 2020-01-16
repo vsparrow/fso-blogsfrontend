@@ -1,5 +1,7 @@
 import React, {useState} from 'react'
-const Blog = ({ blog }) => {
+import blogService from '../services/blogs'
+
+const Blog = ({ blog, user }) => {
 	
 	const [showDetails, setShowDetails] = useState(false)
 	const noDetails = {display: showDetails ? 'none' : ''}
@@ -16,11 +18,17 @@ const Blog = ({ blog }) => {
 		setShowDetails(!showDetails)
 	}
 	
-	const handleLikeClick = (e)=>{
-		e.stopPropagation()
-		console.log("I dont do anything yet")
+	const handleLikeClick = async (e)=>{
+		e.stopPropagation() 
+		//gather all data needed
+		const updatedBlog = JSON.parse(JSON.stringify(blog))		
+		updatedBlog.likes = updatedBlog.likes + 1		
+		const returnedBlog = await blogService.updateBlog(updatedBlog, user.token)
+		console.log('returnedBlog is', returnedBlog)
+		//now we need to update the the likes in the local copy		
+		
 	}
-	console.log("blog", blog)
+	
 	return(
 		<div>
 			<div style={Object.assign(noDetails,blogStyle )} onClick={handleClick}>

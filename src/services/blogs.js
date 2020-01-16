@@ -19,4 +19,11 @@ const postBlog =  async (newBlogData,token) => {
 	return response.data
 }
 
-export default { getAll, login, postBlog }
+const updateBlog = async (updatedBlog,token) => {
+	const setToken = `bearer ${token}`
+	const headers = { headers: {Authorization: setToken} }
+	const response = await axios.put(baseUrl + `/api/blogs/${updatedBlog.id}`, updatedBlog, headers)
+	return response.data
+}
+
+export default { getAll, login, postBlog, updateBlog }
