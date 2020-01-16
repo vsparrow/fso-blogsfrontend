@@ -15,6 +15,12 @@ const Blog = ({ blog }) => {
 	const handleClick = (e)=>{
 		setShowDetails(!showDetails)
 	}
+	
+	const handleLikeClick = (e)=>{
+		e.stopPropagation()
+		console.log("I dont do anything yet")
+	}
+	console.log("blog", blog)
 	return(
 		<div>
 			<div style={Object.assign(noDetails,blogStyle )} onClick={handleClick}>
@@ -23,7 +29,8 @@ const Blog = ({ blog }) => {
 			<div style={Object.assign(allDetails,blogStyle )} onClick={handleClick}>
 				<div>{blog.title} {blog.author}</div>
 				<div>{blog.url}</div>
-				<div>{blog.likes} likes</div>
+				<div>{blog.likes} likes<button onClick={handleLikeClick}>like</button></div>
+				<div>add by {blog.user.name}</div>
 			</div>
 		</div>
 
