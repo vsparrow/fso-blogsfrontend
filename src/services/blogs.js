@@ -33,6 +33,7 @@ const deleteBlog = async (id,token) => {
 	console.log(response)
 	console.log('************')
 	console.log(response.data)
-	return response.data
+	console.log(response.status)
+	return response.status
 }
 export default { getAll, login, postBlog, updateBlog, deleteBlog }
