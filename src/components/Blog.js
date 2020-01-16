@@ -1,7 +1,7 @@
 import React, {useState} from 'react'
 import blogService from '../services/blogs'
 
-const Blog = ({ blog, user }) => {
+const Blog = ({ blog, user, blogs, setBlogs }) => {
 	
 	const [showDetails, setShowDetails] = useState(false)
 	const noDetails = {display: showDetails ? 'none' : ''}
@@ -26,7 +26,11 @@ const Blog = ({ blog, user }) => {
 		const returnedBlog = await blogService.updateBlog(updatedBlog, user.token)
 		console.log('returnedBlog is', returnedBlog)
 		//now we need to update the the likes in the local copy		
-		
+		const updatedBlogs = blogs.map(b=>{
+			if(b.id !==blog.id){return b}
+			return returnedBlog
+		})
+		setBlogs(updatedBlogs)
 	}
 	
 	return(

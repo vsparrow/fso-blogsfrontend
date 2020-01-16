@@ -58,7 +58,7 @@ const BlogsComponent = ({blogs,setBlogs, user,setUser, message, setMessage})=>{
 			</Toggable>	
 			<p></p>
 			<div>{"blogs"}</div>
-			<div>{blogs.map((blog,index)=><Blog key={index} blog={blog} user={user}/>)}</div>
+			<div>{blogs.map((blog,index)=><Blog key={index} blog={blog} user={user} blogs={blogs} setBlogs={setBlogs}/>)}</div>
 		</div>	
 	)
 }//Blogs
