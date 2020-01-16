@@ -40,8 +40,6 @@ const Blog = ({ blog, user, blogs, setBlogs }) => {
 		const handleClick= async (e)=>{ 
 			e.stopPropagation() 
 			const result = await blogService.deleteBlog(blog.id,user.token)
-			console.log('result is', result)
-			console.log(typeof result)
 			if(result === 204){
 				//remove this blog
 				setShowDetails(!showDetails)
