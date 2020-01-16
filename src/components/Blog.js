@@ -34,11 +34,13 @@ const Blog = ({ blog, user, blogs, setBlogs }) => {
 		setBlogs(updatedBlogs)
 	}
 	
-	const DeleteButton = ({user,blog})=>{
+	const DeleteButton =  ({user,blog})=>{
 		//make another user to test this!
 
-		const handleClick=(e)=>{ 
+		const handleClick= async (e)=>{ 
 			e.stopPropagation() 
+			const result = await blogService.deleteBlog(blog.id,user.token)
+			console.log(result)
 		}
 		//show different things based on username
 		if(blog.user.username !== user.username){return <div></div>}
