@@ -31,5 +31,12 @@ describe('<Blog />', ()=>{
 		expect(div).toHaveStyle('display: none')
 	})
 	// verify that when the blog post is clicked, the other information of the blog post becomes visible.
-
+	test('when the blog post is clicked, information is expanded', ()=>{
+		const minimal = component.container.querySelector('#blogMinimal')
+		const extended = component.container.querySelector('#blogExtended')
+		fireEvent.click(minimal)
+		
+		expect(minimal).toHaveStyle('display: none')
+		expect(extended).toHaveStyle('display: block')
+	})
 })//describe
