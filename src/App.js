@@ -3,20 +3,9 @@ import blogService from './services/blogs'
 import Login from './components/Login'
 import Blog from './components/Blog'
 import Message from './components/Message'
-// *********************************************************************************************
-// const Message = ({message, setMessage}) => {
-// 	if(message.length === 0){ return <div></div>}
-// 	setTimeout(()=>{setMessage('')},5000)
-// 	if(message.substr(0,10)==='a new blog'){
-// 		return <div className='message'><h2>{message}</h2></div>		
-// 	}
-// 	// if(message==='Username or Password incorrect'){
-		
-// 	// }
-// 	return <div className='error'><h2>{message}</h2></div>
-// }
 
-// *********************************************************************************************
+
+// *****************************************************************************
 const Toggable = (props) => {
 	const [visible, setVisible] = useState(false)
 	const hideWhenVisible = { display: visible ? 'none' : ''}
@@ -100,8 +89,8 @@ const NewBlogsForm = ({user,blogs,setBlogs,message, setMessage}) => {
 //***********************************************************************************************
 const App = () => {
 	//************************************************************* variables
-	const [username, setUsername] = useState('')
-	const [password, setPassword] = useState('')
+	// const [username, setUsername] = useState('')
+	// const [password, setPassword] = useState('')
 	const [user, setUser] = useState(null)
 	const [blogs, setBlogs] = useState([])
 	const [message, setMessage] = useState('')
@@ -122,10 +111,6 @@ const App = () => {
 	//************************************************************* RENDERING
 	if(user === null){ 
 		return <Login 
-				   username={username} 
-				   setUsername={setUsername} 
-				   password={password} 
-				   setPassword={setPassword} 
 				   user={user} 
 				   setUser={setUser}
 				   message={message}
