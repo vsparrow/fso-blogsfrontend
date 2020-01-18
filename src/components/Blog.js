@@ -57,10 +57,10 @@ const Blog = ({ blog, user, blogs, setBlogs }) => {
 	
 	return(
 		<div>
-			<div style={Object.assign(noDetails,blogStyle )} onClick={handleClick}>
+			<div style={Object.assign(noDetails,blogStyle )} onClick={handleClick} id='blogMinimal'>
 				{blog.title} {blog.author}
 			</div>
-			<div style={Object.assign(allDetails,blogStyle )} onClick={handleClick}>
+			<div style={Object.assign(allDetails,blogStyle )} onClick={handleClick} id='blogExtended'>
 				<div>{blog.title} {blog.author}</div>
 				<div>{blog.url}</div>
 				<div>{blog.likes} likes<button onClick={handleLikeClick}>like</button></div>
