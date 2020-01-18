@@ -5,3 +5,11 @@ export const useField = (type)=>{
 	const onChange=(e)=>{setValue(e.target.value)} //e for event
 	return {type, value, onChange}
 }
+
+export const useFieldReset = (hook)=>{
+	const reset = ()=>{
+			const e={target:{value:''}}
+			hook.onChange(e)
+	}
+	return {reset}
+}

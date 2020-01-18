@@ -1,25 +1,30 @@
 import React from 'react'
 import blogService from '../services/blogs'
 import Message from './Message'
-import {useField} from '../hooks'
+import {useField, useFieldReset} from '../hooks'
 
 //login form
 //removed username, password setUsername, setPassword,
 const Login = ({user,  setUser, message, setMessage}) => {
 	const username = useField('text')
-	const password = useField('text')
+	const password = useField('password')
+	const resetUsername = useFieldReset(username)
+	const resetPassword = useFieldReset(password)
 	
 	const handleLogin = async (e)=>{
 		e.preventDefault()
 		try{
-			const user = await blogService.login({username: username.value, password: password.value})			
+			const user = await blogService.login({username: username.value, password: password.value})
+			resetUsername.reset()
+			resetPassword.reset()			
 			setUser(user)
       		window.localStorage.setItem('loggedBlogappUser', JSON.stringify(user)) 			
-			// setUsername('')
-			// setPassword('')
 		}
 		catch(exception){
-			console.log(exception.message); setMessage('Username or Password incorrect'); console.log('setMessage was set')	
+			console.log(exception.message); 
+			setMessage('Username or Password incorrect'); 
+			resetUsername.reset()
+			resetPassword.reset()	
 		}
 	}
 	return(
