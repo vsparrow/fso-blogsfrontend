@@ -8,7 +8,12 @@ describe('<App />', ()=>{
 	test('if no user logged, blogs are not rendered', async ()=>{
 		const component = render(<App />)
 		component.rerender(<App />)
-		component.debug()
+		// component.debug()
 		await waitForElement(()=>component.getByText('login'))
+		
+		expect(component.container).not.toHaveTextContent('HTML is easy')
+		
+		const blogs = component.container.querySelectorAll('.blog')
+		expect(blogs.length).toBe(0)
 	})	
 })

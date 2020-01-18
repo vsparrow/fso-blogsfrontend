@@ -56,7 +56,7 @@ const Blog = ({ blog, user, blogs, setBlogs }) => {
 	}
 	
 	return(
-		<div>
+		<div className='blog'>
 			<div style={Object.assign(noDetails,blogStyle )} onClick={handleClick} id='blogMinimal'>
 				{blog.title} {blog.author}
 			</div>

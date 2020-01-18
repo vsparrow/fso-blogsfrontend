@@ -47,7 +47,7 @@ const PostLoginMessage = ({user,setUser})=>{
 // *********************************************************************************************
 const BlogsComponent = ({blogs,setBlogs, user,setUser, message, setMessage})=>{
 	return(
-		<div>
+		<div id='BlogsComponent'>
 			<h2>blogs</h2>
 			<Message message={message} setMessage={setMessage} />
 			<PostLoginMessage user={user} setUser={setUser}/>
