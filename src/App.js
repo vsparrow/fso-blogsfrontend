@@ -96,7 +96,10 @@ const App = () => {
 	const [message, setMessage] = useState('')
 	//************************************************************* EFFECT
 	useEffect(() => {
-    	blogService.getAll().then(data => {console.log("data is",data);setBlogs(data)})
+    	blogService.getAll().then(data => {
+			// console.log("data is",data);
+			setBlogs(data)
+		})
   	}, [])
 	
 	useEffect(()=>{
