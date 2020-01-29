@@ -1,9 +1,10 @@
 import React, {useState, useEffect} from 'react';
+import {connect} from 'react-redux'
 import blogService from './services/blogs'
 import Login from './components/Login'
 import Blog from './components/Blog'
 import Message from './components/Message'
-
+import {initializeBlogs} from './reducers/blogReducer'
 
 // *****************************************************************************
 const Toggable = (props) => {
@@ -87,7 +88,7 @@ const NewBlogsForm = ({user,blogs,setBlogs,message, setMessage}) => {
 	)		
 }  
 //***********************************************************************************************
-const App = () => {
+const App = (props) => {
 	//************************************************************* variables
 	// const [username, setUsername] = useState('')
 	// const [password, setPassword] = useState('')
@@ -101,6 +102,11 @@ const App = () => {
 			setBlogs(data)
 		})
   	}, [])
+	
+	useEffect(()=>{  
+		props.initializeBlogs()
+	},[])
+	console.log('blogs from mapStateToProps is', blogs)
 	
 	useEffect(()=>{
 		const loggedUserJSON = window.localStorage.getItem('loggedBlogappUser')
@@ -131,4 +137,5 @@ const App = () => {
 			/> )
 }
 
-export default App;
+const mapStateToProps = state => ({blogs: state.blogs})
+export default connect(mapStateToProps,{initializeBlogs})(App);
