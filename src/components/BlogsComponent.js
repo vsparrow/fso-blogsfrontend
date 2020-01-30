@@ -1,5 +1,6 @@
 import React from 'react'
 import Message from './Message'
+import {connect} from 'react-redux'
 import Blog from './Blog'
 import Toggable from './Toggable'
 import NewBlogsForm from './NewBlogsForm'
@@ -13,6 +14,8 @@ const LogoutButton = ({setUser})=>{
 }
 
 const BlogsComponent = ({blogs,setBlogs, user,setUser, message, setMessage})=>{
+	console.log('blogs from mapStateToProps is', blogs)
+
 	return(
 		<div id='BlogsComponent'>
 			<h2>blogs</h2>
@@ -30,4 +33,6 @@ const BlogsComponent = ({blogs,setBlogs, user,setUser, message, setMessage})=>{
 	)
 }//Blogs
 
-export default BlogsComponent
+// export default BlogsComponent
+const mapStateToProps = state => ({blogs: state.blogs})
+export default connect(mapStateToProps)(BlogsComponent);

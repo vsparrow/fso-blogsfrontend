@@ -12,16 +12,13 @@ const App = (props) => {
 	const [blogs, setBlogs] = useState([])
 	const [message, setMessage] = useState('')
 	//************************************************************* EFFECT
-	useEffect(() => {
-    	blogService.getAll().then(data => {
-			setBlogs(data)
-		})
-  	}, [])
+	// useEffect(() => {
+	// blogService.getAll().then(data => {
+	// 		setBlogs(data)
+	// 	})
+	// }, [])
 	
-	useEffect(()=>{  
-		props.initializeBlogs()
-	},[])
-	console.log('blogs from mapStateToProps is', blogs)
+	useEffect(()=>{ props.initializeBlogs()	},[])
 	
 	useEffect(()=>{
 		const loggedUserJSON = window.localStorage.getItem('loggedBlogappUser')
@@ -43,7 +40,7 @@ const App = (props) => {
 	}
 	//else
 	return (<BlogsComponent 
-				blogs={blogs} 
+
 				setBlogs={setBlogs} 
 				user={user} 
 				setUser={setUser}
