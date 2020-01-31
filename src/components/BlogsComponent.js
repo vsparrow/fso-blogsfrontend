@@ -4,14 +4,14 @@ import {connect} from 'react-redux'
 import Blog from './Blog'
 import Toggable from './Toggable'
 import NewBlogsForm from './NewBlogsForm'
+import PostLoginNotification from './PostLoginNotification'
+// const PostLoginMessage = ({user,setUser})=>{
+// 	return(<div><p>{user.name} logged in<LogoutButton setUser={setUser}/></p></div>)
+// }
 
-const PostLoginMessage = ({user,setUser})=>{
-	return(<div><p>{user.name} logged in<LogoutButton setUser={setUser}/></p></div>)
-}
-
-const LogoutButton = ({setUser})=>{
-	return <button onClick={()=>{window.localStorage.removeItem('loggedBlogappUser'); setUser(null);}}>logout</button>
-}
+// const LogoutButton = ({setUser})=>{
+// 	return <button onClick={()=>{window.localStorage.removeItem('loggedBlogappUser'); setUser(null);}}>logout</button>
+// }
 
 const BlogsComponent = ({blogs,setBlogs, user,setUser, message, setMessage})=>{
 	console.log('blogs from mapStateToProps is', blogs)
@@ -19,8 +19,8 @@ const BlogsComponent = ({blogs,setBlogs, user,setUser, message, setMessage})=>{
 	return(
 		<div id='BlogsComponent'>
 			<h2>blogs</h2>
-			<Message message={message} setMessage={setMessage} />
-			<PostLoginMessage user={user} setUser={setUser}/>
+			<Message message={message} setMessage={setMessage} />			
+			<PostLoginNotification user={user} setUser={setUser}/>
 			<Toggable buttonLabel={'Add a new blog'}>
 				<NewBlogsForm user={user} blogs={blogs} setBlogs={setBlogs} message={message}
 				setMessage={setMessage}	
