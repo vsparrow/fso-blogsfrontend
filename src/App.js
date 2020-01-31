@@ -4,7 +4,7 @@ import blogService from './services/blogs'
 import Login from './components/Login'
 import BlogsComponent from './components/BlogsComponent'
 import {initializeBlogs} from './reducers/blogReducer'
-
+import {setUserRedux} from './reducers/userReducer'
 
 const App = (props) => {
 	//************************************************************* variables
@@ -25,6 +25,7 @@ const App = (props) => {
 		if(loggedUserJSON){
 			const user = JSON.parse(loggedUserJSON)
 			setUser(user)
+			props.setUserRedux(user)
 			blogService.getAll()
 		}
 	},[])
@@ -50,4 +51,5 @@ const App = (props) => {
 }
 
 const mapStateToProps = state => ({blogs: state.blogs})
-export default connect(mapStateToProps,{initializeBlogs})(App);
+const mapDispatchToProps = ({setUserRedux, initializeBlogs})
+export default connect(mapStateToProps,mapDispatchToProps)(App);
