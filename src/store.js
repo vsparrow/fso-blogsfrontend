@@ -2,10 +2,11 @@ import {createStore, combineReducers, applyMiddleware} from 'redux'
 import thunk from 'redux-thunk'
 
 import blogReducer from './reducers/blogReducer'
-
+import messageReducer from './reducers/messageReducer'
 //ADD reducers here
 const reducer = combineReducers({	
-	blogs: blogReducer
+	blogs: blogReducer,
+	rmessage: messageReducer
 })
 
 const store = createStore(reducer, applyMiddleware(thunk))

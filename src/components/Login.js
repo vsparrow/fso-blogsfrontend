@@ -1,11 +1,14 @@
 import React from 'react'
+import {connect} from 'react-redux'
 import blogService from '../services/blogs'
 import Message from './Message'
+import {setMessageRedux} from '../reducers/messageReducer'
 import {useField, useFieldReset} from '../hooks'
 
 //login form
 //removed username, password setUsername, setPassword,
-const Login = ({user,  setUser, message, setMessage}) => {
+const Login = (props) => {
+	console.log("login props",props)
 	const username = useField('text')
 	const password = useField('password')
 	const resetUsername = useFieldReset(username)
@@ -17,12 +20,13 @@ const Login = ({user,  setUser, message, setMessage}) => {
 			const user = await blogService.login({username: username.value, password: password.value})
 			resetUsername.reset()
 			resetPassword.reset()			
-			setUser(user)
+			props.setUser(props.user)
       		window.localStorage.setItem('loggedBlogappUser', JSON.stringify(user)) 			
 		}
 		catch(exception){
 			console.log(exception.message); 
-			setMessage('Username or Password incorrect'); 
+			props.setMessage('Username or Password incorrect');
+			props.setMessageRedux('**** Incorrect logon - sponsered by redux')
 			resetUsername.reset()
 			resetPassword.reset()	
 		}
@@ -30,7 +34,7 @@ const Login = ({user,  setUser, message, setMessage}) => {
 	return(
 		<div>
 			<h2>log in to application</h2>
-			<Message message={message} setMessage={setMessage} />
+			<Message message={props.message} setMessage={props.setMessage} />
 			<form onSubmit={handleLogin}>
 				<div>username <input {...username}/></div>
 				<div>password <input {...password}/></div>
@@ -40,4 +44,6 @@ const Login = ({user,  setUser, message, setMessage}) => {
 	)
 }//Login
 
-export default  Login
+const mapDispatchToProps = {setMessageRedux}
+
+export default  connect(null,mapDispatchToProps)(Login)
