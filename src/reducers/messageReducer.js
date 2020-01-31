@@ -3,7 +3,6 @@ const messageReducer = (state='', action) =>{
 		case 'GET_MESSAGE':
 			return state
 		case 'SET_MESSAGE':
-			console.log('action is', action)
 			return action.rmessage
 		default:
 			return state
