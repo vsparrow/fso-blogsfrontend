@@ -7,22 +7,20 @@ import {setUserRedux} from '../reducers/userReducer'
 import {useField, useFieldReset} from '../hooks'
 
 //login form
-//removed username, password setUsername, setPassword,
 const Login = (props) => {
 	const username = useField('text')
 	const password = useField('password')
 	const resetUsername = useFieldReset(username)
 	const resetPassword = useFieldReset(password)
-	console.log(props)
+
 	const handleLogin = async (e)=>{
 		e.preventDefault()
 		try{
 			const user = await blogService.login({username: username.value, password: password.value})
 			resetUsername.reset()
 			resetPassword.reset()
-			console.log(user)
 			props.setUser(user)
-			// props.setUserRedux()
+			props.setUserRedux(user)
       		window.localStorage.setItem('loggedBlogappUser', JSON.stringify(user)) 			
 		}
 		catch(exception){
@@ -45,7 +43,7 @@ const Login = (props) => {
 		</div>
 	)
 }//Login
-
+// setUserRedux
 const mapDispatchToProps = {setMessageRedux, setUserRedux}
 
 export default  connect(null,mapDispatchToProps)(Login)
