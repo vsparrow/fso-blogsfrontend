@@ -12,12 +12,7 @@ const App = (props) => {
 	const [blogs, setBlogs] = useState([])
 	const [message, setMessage] = useState('')
 	//************************************************************* EFFECT
-	// useEffect(() => {
-	// blogService.getAll().then(data => {
-	// 		setBlogs(data)
-	// 	})
-	// }, [])
-	
+
 	useEffect(()=>{ props.initializeBlogs()	},[])
 	
 	useEffect(()=>{
@@ -31,7 +26,7 @@ const App = (props) => {
 	},[])
 	
 	//************************************************************* RENDERING
-	if(user === null){ 
+	if(props.ruser === null){ 
 		return <Login 
 				   user={user} 
 				   setUser={setUser}
@@ -50,6 +45,6 @@ const App = (props) => {
 			/> )
 }
 
-const mapStateToProps = state => ({blogs: state.blogs})
+const mapStateToProps = state => ({blogs: state.blogs, ruser: state.ruser})
 const mapDispatchToProps = ({setUserRedux, initializeBlogs})
 export default connect(mapStateToProps,mapDispatchToProps)(App);
