@@ -1,17 +1,28 @@
 import React from 'react'
 import {connect} from 'react-redux'
+import {clearUserRedux} from '../reducers/userReducer'
 
-const LogoutButton = ({setUser})=>{
-	return <button onClick={()=>{window.localStorage.removeItem('loggedBlogappUser'); setUser(null);}}>logout</button>
-}
 
 const PostLoginMessage = (props)=>{
+	const LogoutButton = ()=>{
+		return (
+			<button onClick={
+					()=>{window.localStorage.removeItem('loggedBlogappUser'); 
+						 props.setUser(null);
+						 props.clearUserRedux()
+						}
+					}>
+				logout
+			</button>)
+}
+
+	
 	console.log(props)
 	return(<div>
-			<p>{props.user.name} logged in<LogoutButton setUser={props.setUser}/></p>
-			<p>ruser.name is {props.ruser ? props.ruser.name : ''}</p>
+			<p>{props.ruser ? props.ruser.name : ''} logged in<LogoutButton setUser={props.setUser}/></p>			
 		</div>)
 }
 
 const mapStateToProps = state => ({ruser: state.ruser})
-export default connect(mapStateToProps)(PostLoginMessage)
+const mapDispatchToProps = ({clearUserRedux})
+export default connect(mapStateToProps, mapDispatchToProps)(PostLoginMessage)
