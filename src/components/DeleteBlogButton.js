@@ -7,18 +7,8 @@ const DeleteButton =  (props)=>{
 		e.stopPropagation() //needed because parent has a onClick function
 		if(window.confirm(`remove ${props.blog.title} by ${props.blog.user.name}?`)){
 			props.deleteBlog(props.blog, props.ruser.token)
-			//need to delete blog in backend and update the state ************************************
-			// const result = await blogService.deleteBlog(blog.id,ruser.token)
-			// if(result === 204){
-			// 	//remove this blog
-			// needed because the next blog that occupies this space will start in an expanded mode which we dont want
-			props.setShowDetails(!props.showDetails) // this doesnt matter once blog deleted 
-			
-			// 	const updatedBlogs = blogs.filter(b=> b.id !== blog.id)
-			// 	setBlogs(updatedBlogs)
-			// }
-			///////////////////////**********************************************work on above
-			//add error message if not 204
+			// setShowDetails needed because the next blog that occupies this space will start in an expanded mode 
+			props.setShowDetails(!props.showDetails) 
 		}//end confirm	
 	}
 	//show different things based on username

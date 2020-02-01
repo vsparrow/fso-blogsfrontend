@@ -29,13 +29,8 @@ const updateBlog = async (updatedBlog,token) => {
 const deleteBlog = async (id,token) => {
 	const setToken = `bearer ${token}`
 	const headers = { headers: {Authorization: setToken} }
-	try{
-		const response = await axios.delete(baseUrl + `/api/blogs/${id}`, headers)
-		return response.status		
-	} catch(exception){
-		console.log(exception)
-	}
-	
+	const response = await axios.delete(baseUrl + `/api/blogs/${id}`, headers)
+	return response.status		
 }
 
 export default { getAll, login, postBlog, updateBlog, deleteBlog }
