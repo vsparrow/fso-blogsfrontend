@@ -11,7 +11,9 @@ const DeleteButton =  (props)=>{
 			// const result = await blogService.deleteBlog(blog.id,ruser.token)
 			// if(result === 204){
 			// 	//remove this blog
-			// 	// setShowDetails(!showDetails) // this doesnt matter once blog deleted
+			// needed because the next blog that occupies this space will start in an expanded mode which we dont want
+			props.setShowDetails(!props.showDetails) // this doesnt matter once blog deleted 
+			
 			// 	const updatedBlogs = blogs.filter(b=> b.id !== blog.id)
 			// 	setBlogs(updatedBlogs)
 			// }
