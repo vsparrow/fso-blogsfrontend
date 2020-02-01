@@ -4,7 +4,7 @@ import blogService from '../services/blogs'
 import DeleteButton from './DeleteBlogButton'
 import {updateLikes} from '../reducers/blogReducer'
 
-const Blog = ({ blog, user, blogs, setBlogs, ruser, updateLikes }) => {
+const Blog = ({ blog, ruser, updateLikes }) => {
 
 	const [showDetails, setShowDetails] = useState(false)
 	const noDetails = {display: showDetails ? 'none' : ''}
@@ -24,18 +24,6 @@ const Blog = ({ blog, user, blogs, setBlogs, ruser, updateLikes }) => {
 	const handleLikeClick = async (e)=>{
 		e.stopPropagation() 
 		updateLikes(blog)
-		// //gather all data needed
-		// const updatedBlog = JSON.parse(JSON.stringify(blog))		
-		// updatedBlog.likes = updatedBlog.likes + 1		
-		// const returnedBlog = await blogService.updateBlog(updatedBlog, user.token)
-		// console.log('returnedBlog is', returnedBlog)
-		// //now we need to update the the likes in the local copy		
-		// const updatedBlogs = blogs.map(b=>{
-		// 	if(b.id !==blog.id){return b}
-		// 	return returnedBlog
-		// })
-		// setShowDetails(!showDetails)
-		// setBlogs(updatedBlogs)
 	}
 	
 

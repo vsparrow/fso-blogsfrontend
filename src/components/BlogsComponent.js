@@ -19,7 +19,7 @@ const BlogsComponent = ({blogs,setBlogs, user,setUser, message, setMessage})=>{
 			</Toggable>	
 			<p></p>
 			<div>{"blogs"}</div>
-			<div>{blogs.sort((a,b)=>b.likes-a.likes).map((blog,index)=><Blog key={index} blog={blog} user={user} blogs={blogs} setBlogs={setBlogs}/>)}</div>
+			<div>{blogs.sort((a,b)=>b.likes-a.likes).map((blog,index)=><Blog key={index} blog={blog} />)}</div>
 		</div>	
 	)
 }//Blogs
