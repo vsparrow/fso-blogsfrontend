@@ -6,24 +6,21 @@ import Toggable from './Toggable'
 import NewBlogsForm from './NewBlogsForm'
 import PostLoginNotification from './PostLoginNotification'
 
-const BlogsComponent = ({blogs,setBlogs, user,setUser, message, setMessage})=>{
+const BlogsComponent = (props)=>{
 	return(
 		<div id='BlogsComponent'>
 			<h2>blogs</h2>
-			<Message message={message} setMessage={setMessage} />			
-			<PostLoginNotification user={user} setUser={setUser}/>
+			<Message  />			
+			<PostLoginNotification />
 			<Toggable buttonLabel={'Add a new blog'}>
-				<NewBlogsForm user={user} blogs={blogs} setBlogs={setBlogs} message={message}
-				setMessage={setMessage}	
-				/>
+				<NewBlogsForm />
 			</Toggable>	
 			<p></p>
-			<div>{"blogs"}</div>
-			<div>{blogs.sort((a,b)=>b.likes-a.likes).map((blog,index)=><Blog key={index} blog={blog} />)}</div>
+			<div>blogs</div>
+			<div>{props.blogs.sort((a,b)=>b.likes-a.likes).map((blog,index)=><Blog key={index} blog={blog} />)}</div>
 		</div>	
 	)
 }//Blogs
 
-// export default BlogsComponent
 const mapStateToProps = state => ({blogs: state.blogs})
 export default connect(mapStateToProps)(BlogsComponent);

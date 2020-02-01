@@ -35,14 +35,7 @@ const App = (props) => {
 				/>
 	}
 	//else
-	return (<BlogsComponent 
-
-				setBlogs={setBlogs} 
-				user={user} 
-				setUser={setUser}
-				message={message}
-				setMessage={setMessage}
-			/> )
+	return (<BlogsComponent /> )
 }
 
 const mapStateToProps = state => ({blogs: state.blogs, ruser: state.ruser})
