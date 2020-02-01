@@ -1,6 +1,7 @@
 import React, {useState} from 'react'
 import {connect} from 'react-redux'
 import blogService from '../services/blogs'
+import DeleteButton from './DeleteBlogButton'
 
 const Blog = ({ blog, user, blogs, setBlogs, ruser }) => {
 
@@ -35,26 +36,24 @@ const Blog = ({ blog, user, blogs, setBlogs, ruser }) => {
 		setBlogs(updatedBlogs)
 	}
 	
-	const DeleteButton =  ({user,blog})=>{
-		//make another user to test this!
-
-		const handleClick= async (e)=>{ 
-			e.stopPropagation() 
-			if(window.confirm(`remove ${blog.title} by ${blog.user.name}?`)){
-				const result = await blogService.deleteBlog(blog.id,user.token)
-				if(result === 204){
-					//remove this blog
-					setShowDetails(!showDetails)
-					const updatedBlogs = blogs.filter(b=> b.id !== blog.id)
-					setBlogs(updatedBlogs)
-				}
-				//add error message if not 204
-			}//end confirm	
-		}
-		//show different things based on username
-		if(blog.user.username !== user.username){return <div></div>}
-		return <button onClick={handleClick}>remove</button>
-	}
+	// const DeleteButton =  ({user,blog})=>{
+	// 	const handleClick= async (e)=>{ 
+	// 		e.stopPropagation() 
+	// 		if(window.confirm(`remove ${blog.title} by ${blog.user.name}?`)){
+	// 			const result = await blogService.deleteBlog(blog.id,user.token)
+	// 			if(result === 204){
+	// 				//remove this blog
+	// 				setShowDetails(!showDetails)
+	// 				const updatedBlogs = blogs.filter(b=> b.id !== blog.id)
+	// 				setBlogs(updatedBlogs)
+	// 			}
+	// 			//add error message if not 204
+	// 		}//end confirm	
+	// 	}
+	// 	//show different things based on username
+	// 	if(blog.user.username !== user.username){return <div></div>}
+	// 	return <button onClick={handleClick}>remove</button>
+	// }
 	
 	return(
 		<div className='blog'>
@@ -66,7 +65,7 @@ const Blog = ({ blog, user, blogs, setBlogs, ruser }) => {
 				<div>{blog.url}</div>
 				<div>{blog.likes} likes<button onClick={handleLikeClick}>like</button></div>
 				<div>add by {blog.user.name}</div>
-				<DeleteButton blog={blog} user={user}/>
+				<DeleteButton blog={blog} />
 			</div>
 		</div>
 
