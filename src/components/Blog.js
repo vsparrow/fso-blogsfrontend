@@ -1,8 +1,9 @@
 import React, {useState} from 'react'
+import {connect} from 'react-redux'
 import blogService from '../services/blogs'
 
-const Blog = ({ blog, user, blogs, setBlogs }) => {
-	
+const Blog = ({ blog, user, blogs, setBlogs, ruser }) => {
+
 	const [showDetails, setShowDetails] = useState(false)
 	const noDetails = {display: showDetails ? 'none' : ''}
 	const allDetails = {display: showDetails ? '' : 'none'}
@@ -72,4 +73,5 @@ const Blog = ({ blog, user, blogs, setBlogs }) => {
 	)
 }
 
-export default Blog
+const mapStateToProps = state => ({ruser: state.ruser})
+export default connect(mapStateToProps)(Blog)
