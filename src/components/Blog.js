@@ -36,25 +36,7 @@ const Blog = ({ blog, user, blogs, setBlogs, ruser }) => {
 		setBlogs(updatedBlogs)
 	}
 	
-	// const DeleteButton =  ({user,blog})=>{
-	// 	const handleClick= async (e)=>{ 
-	// 		e.stopPropagation() 
-	// 		if(window.confirm(`remove ${blog.title} by ${blog.user.name}?`)){
-	// 			const result = await blogService.deleteBlog(blog.id,user.token)
-	// 			if(result === 204){
-	// 				//remove this blog
-	// 				setShowDetails(!showDetails)
-	// 				const updatedBlogs = blogs.filter(b=> b.id !== blog.id)
-	// 				setBlogs(updatedBlogs)
-	// 			}
-	// 			//add error message if not 204
-	// 		}//end confirm	
-	// 	}
-	// 	//show different things based on username
-	// 	if(blog.user.username !== user.username){return <div></div>}
-	// 	return <button onClick={handleClick}>remove</button>
-	// }
-	
+
 	return(
 		<div className='blog'>
 			<div style={Object.assign(noDetails,blogStyle )} onClick={handleClick} id='blogMinimal'>
