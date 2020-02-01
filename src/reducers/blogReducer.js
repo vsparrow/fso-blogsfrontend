@@ -31,7 +31,11 @@ export const deleteBlog = (blog,token) => {
 		const result = await blogService.deleteBlog(blog.id, token)
 		if(result === 204){ 
 			dispatch({type:'DELETE_BLOG', data: blog.id})
-		}	
+		}
+		else{
+			dispatch({type:'SET_MESSAGE', rmessage: `Error deleting blog`})
+			setTimeout(()=>{dispatch({type:'SET_MESSAGE', rmessage:''})}, 5000)
+		}
 	}
 }
 //test this later if we move posting blog to reducer
