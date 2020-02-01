@@ -1,6 +1,5 @@
 import React, {useEffect} from 'react';
 import {connect} from 'react-redux'
-import blogService from './services/blogs'
 import Login from './components/Login'
 import BlogsComponent from './components/BlogsComponent'
 import {initializeBlogs} from './reducers/blogReducer'
@@ -16,7 +15,6 @@ const App = (props) => {
 		if(loggedUserJSON){
 			const user = JSON.parse(loggedUserJSON)
 			props.setUserRedux(user)
-			blogService.getAll()
 		}
 	},[])
 	
@@ -25,6 +23,6 @@ const App = (props) => {
 	return (<BlogsComponent /> )
 }
 
-const mapStateToProps = state => ({blogs: state.blogs, ruser: state.ruser})
+const mapStateToProps = state => ({ruser: state.ruser})
 const mapDispatchToProps = ({setUserRedux, initializeBlogs})
 export default connect(mapStateToProps,mapDispatchToProps)(App);
