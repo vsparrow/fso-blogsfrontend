@@ -2,6 +2,7 @@ import React,{useState} from 'react'
 import {connect} from 'react-redux'
 import blogService from '../services/blogs'
 import {setMessageRedux} from '../reducers/messageReducer'
+import {addBlog} from '../reducers/blogReducer'
 
 // const NewBlogsForm = ({user,blogs,setBlogs,message, setMessage}) => {
 const NewBlogsForm = (props) => {
@@ -17,7 +18,7 @@ const NewBlogsForm = (props) => {
 			//move this work to the reducer
 			const results = await blogService.postBlog(newBlogData, props.ruser.token) //******
 			props.setBlogs(props.blogs.concat(results))
-			// setMessage(`a new blog ${results.title} by ${results.author} added`)
+			props.addBlog(results)
 			props.setMessageRedux(`a new blog ${results.title} by ${results.author} added`)
 			setTimeout(()=>{props.setMessageRedux('')},5000)
 		}catch(error){props.setMessage('error adding blog')}	
@@ -39,5 +40,5 @@ const NewBlogsForm = (props) => {
 	)		
 }  
 const mapStateToProps = state => ({ruser: state.ruser})
-const mapDispatchToProps = {setMessageRedux}
+const mapDispatchToProps = {setMessageRedux, addBlog}
 export default connect(mapStateToProps, mapDispatchToProps)(NewBlogsForm)
