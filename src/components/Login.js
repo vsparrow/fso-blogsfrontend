@@ -19,7 +19,7 @@ const Login = (props) => {
 			const user = await blogService.login({username: username.value, password: password.value})
 			resetUsername.reset()
 			resetPassword.reset()
-			props.setUser(user)
+			// props.setUser(user)
 			props.setUserRedux(user)
       		window.localStorage.setItem('loggedBlogappUser', JSON.stringify(user)) 			
 		}
@@ -34,7 +34,7 @@ const Login = (props) => {
 	return(
 		<div>
 			<h2>log in to application</h2>
-			<Message message={''} setMessage={(message)=>{}} />
+			<Message />
 			<form onSubmit={handleLogin}>
 				<div>username <input {...username}/></div>
 				<div>password <input {...password}/></div>

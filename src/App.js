@@ -1,4 +1,4 @@
-import React, {useState, useEffect} from 'react';
+import React, {useEffect} from 'react';
 import {connect} from 'react-redux'
 import blogService from './services/blogs'
 import Login from './components/Login'
@@ -7,10 +7,6 @@ import {initializeBlogs} from './reducers/blogReducer'
 import {setUserRedux} from './reducers/userReducer'
 
 const App = (props) => {
-	//************************************************************* variables
-	const [user, setUser] = useState(null)
-	const [blogs, setBlogs] = useState([])
-	const [message, setMessage] = useState('')
 	//************************************************************* EFFECT
 
 	useEffect(()=>{ props.initializeBlogs()	},[])
@@ -19,22 +15,13 @@ const App = (props) => {
 		const loggedUserJSON = window.localStorage.getItem('loggedBlogappUser')
 		if(loggedUserJSON){
 			const user = JSON.parse(loggedUserJSON)
-			setUser(user)
 			props.setUserRedux(user)
 			blogService.getAll()
 		}
 	},[])
 	
 	//************************************************************* RENDERING
-	if(props.ruser === null){ 
-		return <Login 
-				   user={user} 
-				   setUser={setUser}
-				   message={message}
-				   setMessage={setMessage}
-				/>
-	}
-	//else
+	if(props.ruser === null){ return <Login />}
 	return (<BlogsComponent /> )
 }
 

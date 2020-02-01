@@ -1,6 +1,5 @@
 import React, {useState} from 'react'
 import {connect} from 'react-redux'
-import blogService from '../services/blogs'
 import DeleteButton from './DeleteBlogButton'
 import {updateLikes} from '../reducers/blogReducer'
 
