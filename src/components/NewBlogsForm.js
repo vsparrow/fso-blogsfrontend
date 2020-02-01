@@ -17,11 +17,11 @@ const NewBlogsForm = (props) => {
 		try{
 			//move this work to the reducer
 			const results = await blogService.postBlog(newBlogData, props.ruser.token) //******
-			props.setBlogs(props.blogs.concat(results))
+			// props.setBlogs(props.blogs.concat(results))
 			props.addBlog(results)
 			props.setMessageRedux(`a new blog ${results.title} by ${results.author} added`)
 			setTimeout(()=>{props.setMessageRedux('')},5000)
-		}catch(error){props.setMessage('error adding blog')}	
+		}catch(error){props.setMessageRedux('error adding blog')}	
 		setTitle('')
 		setAuthor('')
 		setUrl('')
