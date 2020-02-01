@@ -2,8 +2,9 @@ import React, {useState} from 'react'
 import {connect} from 'react-redux'
 import blogService from '../services/blogs'
 import DeleteButton from './DeleteBlogButton'
+import {updateLikes} from '../reducers/blogReducer'
 
-const Blog = ({ blog, user, blogs, setBlogs, ruser }) => {
+const Blog = ({ blog, user, blogs, setBlogs, ruser, updateLikes }) => {
 
 	const [showDetails, setShowDetails] = useState(false)
 	const noDetails = {display: showDetails ? 'none' : ''}
@@ -22,18 +23,19 @@ const Blog = ({ blog, user, blogs, setBlogs, ruser }) => {
 	
 	const handleLikeClick = async (e)=>{
 		e.stopPropagation() 
-		//gather all data needed
-		const updatedBlog = JSON.parse(JSON.stringify(blog))		
-		updatedBlog.likes = updatedBlog.likes + 1		
-		const returnedBlog = await blogService.updateBlog(updatedBlog, user.token)
-		console.log('returnedBlog is', returnedBlog)
-		//now we need to update the the likes in the local copy		
-		const updatedBlogs = blogs.map(b=>{
-			if(b.id !==blog.id){return b}
-			return returnedBlog
-		})
-		setShowDetails(!showDetails)
-		setBlogs(updatedBlogs)
+		updateLikes(blog)
+		// //gather all data needed
+		// const updatedBlog = JSON.parse(JSON.stringify(blog))		
+		// updatedBlog.likes = updatedBlog.likes + 1		
+		// const returnedBlog = await blogService.updateBlog(updatedBlog, user.token)
+		// console.log('returnedBlog is', returnedBlog)
+		// //now we need to update the the likes in the local copy		
+		// const updatedBlogs = blogs.map(b=>{
+		// 	if(b.id !==blog.id){return b}
+		// 	return returnedBlog
+		// })
+		// setShowDetails(!showDetails)
+		// setBlogs(updatedBlogs)
 	}
 	
 
@@ -50,9 +52,9 @@ const Blog = ({ blog, user, blogs, setBlogs, ruser }) => {
 				<DeleteButton blog={blog} showDetails={showDetails} setShowDetails={setShowDetails} />
 			</div>
 		</div>
-
 	)
 }
 
 const mapStateToProps = state => ({ruser: state.ruser})
-export default connect(mapStateToProps)(Blog)
+const mapDispatchToProps = ({updateLikes})
+export default connect(mapStateToProps, mapDispatchToProps)(Blog)

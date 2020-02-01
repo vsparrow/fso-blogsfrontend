@@ -12,6 +12,9 @@ const blogReducer = (state=[],action) =>{
 			const id = action.data
 			const updatedBlogs = state.filter(b=>b.id !== id)
 			return updatedBlogs
+		case 'UPDATE_LIKES':
+			const updatedLikes = state.map(b=> b.id !== action.data ? b : {...b, likes: ++b.likes})
+			return updatedLikes
 		default:
 			return state
 	}
@@ -36,6 +39,25 @@ export const deleteBlog = (blog,token) => {
 			dispatch({type:'SET_MESSAGE', rmessage: `Error deleting blog`})
 			setTimeout(()=>{dispatch({type:'SET_MESSAGE', rmessage:''})}, 5000)
 		}
+	}
+}
+
+export const updateLikes = (blog,token) => {
+	return async dispatch => {
+		//update object
+		const updatedBlog = {...blog, likes : blog.likes + 1}
+		try{
+			const returnedBlog = await blogService.updateBlog(updatedBlog, token)
+			console.log('returnedBlog is', returnedBlog)
+			dispatch({type: 'UPDATE_LIKES', data: blog.id}) // <-------------------------------------------------------
+		} catch(error){
+			console.log(error)
+		}
+		
+
+
+		//dispatch update
+		//show error if error
 	}
 }
 //test this later if we move posting blog to reducer
