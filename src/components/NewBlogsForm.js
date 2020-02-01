@@ -11,17 +11,15 @@ const NewBlogsForm = (props) => {
 	
 	const createHandler = async (e) => { 
 		e.preventDefault()
-		console.log('NewBlogsForm', props)
 		const newBlogData = {title,url,author}
-		console.log('data to send to server is',newBlogData)
 		//post the blog
 		try{
 			//move this work to the reducer
 			const results = await blogService.postBlog(newBlogData, props.ruser.token) //******
-			console.log("results are,", results)
 			props.setBlogs(props.blogs.concat(results))
 			// setMessage(`a new blog ${results.title} by ${results.author} added`)
 			props.setMessageRedux(`a new blog ${results.title} by ${results.author} added`)
+			setTimeout(()=>{props.setMessageRedux('')},5000)
 		}catch(error){props.setMessage('error adding blog')}	
 		setTitle('')
 		setAuthor('')

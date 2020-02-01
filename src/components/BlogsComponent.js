@@ -5,17 +5,8 @@ import Blog from './Blog'
 import Toggable from './Toggable'
 import NewBlogsForm from './NewBlogsForm'
 import PostLoginNotification from './PostLoginNotification'
-// const PostLoginMessage = ({user,setUser})=>{
-// 	return(<div><p>{user.name} logged in<LogoutButton setUser={setUser}/></p></div>)
-// }
-
-// const LogoutButton = ({setUser})=>{
-// 	return <button onClick={()=>{window.localStorage.removeItem('loggedBlogappUser'); setUser(null);}}>logout</button>
-// }
 
 const BlogsComponent = ({blogs,setBlogs, user,setUser, message, setMessage})=>{
-	console.log('blogs from mapStateToProps is', blogs)
-
 	return(
 		<div id='BlogsComponent'>
 			<h2>blogs</h2>
