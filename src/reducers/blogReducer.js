@@ -5,7 +5,6 @@ const blogReducer = (state=[],action) =>{
 		case 'INIT_BLOGS':
 			return action.data
 		case 'ADD_BLOG':
-			console.log('newBlogs', action.data)
 			const newBlogs=state.concat(action.data)
 			return newBlogs
 		case 'DELETE_BLOG':
@@ -44,7 +43,6 @@ export const deleteBlog = (blog,token) => {
 
 export const updateLikes = (blog,token) => {
 	return async dispatch => {
-		//update object
 		const updatedBlog = {...blog, likes : blog.likes + 1}
 		try{
 			const returnedBlog = await blogService.updateBlog(updatedBlog, token)
@@ -52,6 +50,8 @@ export const updateLikes = (blog,token) => {
 			dispatch({type: 'UPDATE_LIKES', data: blog.id}) // <-------------------------------------------------------
 		} catch(error){
 			console.log(error)
+			dispatch({type: 'SET_MESSAGE', rmessage: `ERROR UPDATING LIKES FOR ${blog.title} by ${blog.author}`})
+			setTimeout(()=>{dispatch({type: 'SET_MESSAGE', rmessage:''})},5000)
 		}
 		
 
