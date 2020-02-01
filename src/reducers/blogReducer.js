@@ -8,6 +8,10 @@ const blogReducer = (state=[],action) =>{
 			console.log('newBlogs', action.data)
 			const newBlogs=state.concat(action.data)
 			return newBlogs
+		case 'DELETE_BLOG':
+			const id = action.data
+			const updatedBlogs = state.filter(b=>b.id !== id)
+			return updatedBlogs
 		default:
 			return state
 	}
@@ -22,6 +26,14 @@ export const initializeBlogs = ()=>{
 
 export const addBlog = blog => dispatch => dispatch({type: 'ADD_BLOG', data: blog})
 
+export const deleteBlog = (blog,token) => {
+	return async dispatch => {
+		const result = await blogService.deleteBlog(blog.id, token)
+		if(result === 204){ 
+			dispatch({type:'DELETE_BLOG', data: blog.id})
+		}	
+	}
+}
 //test this later if we move posting blog to reducer
 // export const addBlog = (blogData, token) => {
 // 	return async dispatch => {
