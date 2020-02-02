@@ -1,6 +1,6 @@
 import React,{useState} from 'react'
 import {connect} from 'react-redux'
-import blogService from '../services/blogs'
+// import blogService from '../services/blogs'
 import {setMessageRedux} from '../reducers/messageReducer'
 import {addBlog} from '../reducers/blogReducer'
 
@@ -13,15 +13,7 @@ const NewBlogsForm = (props) => {
 	const createHandler = async (e) => { 
 		e.preventDefault()
 		const newBlogData = {title,url,author}
-		//post the blog
-		try{
-			//move this work to the reducer
-			const results = await blogService.postBlog(newBlogData, props.ruser.token) //******
-			// props.setBlogs(props.blogs.concat(results))
-			props.addBlog(results)
-			props.setMessageRedux(`a new blog ${results.title} by ${results.author} added`)
-			setTimeout(()=>{props.setMessageRedux('')},5000)
-		}catch(error){props.setMessageRedux('error adding blog')}	
+		props.addBlog(newBlogData, props.ruser.token)
 		setTitle('')
 		setAuthor('')
 		setUrl('')

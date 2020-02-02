@@ -26,7 +26,21 @@ export const initializeBlogs = ()=>{
 	}
 }
 
-export const addBlog = blog => dispatch => dispatch({type: 'ADD_BLOG', data: blog})
+// export const addBlog = blog => dispatch => dispatch({type: 'ADD_BLOG', data: blog})
+export const addBlog = (blogData, token) => {
+	return async dispatch => {
+		try{
+			const blog = await blogService.postBlog(blogData, token)
+			dispatch({type: 'ADD_BLOG', data: blog})
+			dispatch({type: 'SET_MESSAGE', rmessage: `a new blog ${blog.title} by ${blog.author} added`})
+			setTimeout(()=>{dispatch({type: 'SET_MESSAGE', rmessage: ''})},5000)			
+		} catch(error){
+			dispatch({type: 'SET_MESSAGE', rmessage: 'There was an error adding the blog'})
+			setTimeout(()=>{dispatch({type: 'SET_MESSAGE', rmessage: ''})},5000)				
+		}
+
+	}
+}
 
 export const deleteBlog = (blog,token) => {
 	return async dispatch => {
@@ -53,19 +67,8 @@ export const updateLikes = (blog,token) => {
 			dispatch({type: 'SET_MESSAGE', rmessage: `ERROR UPDATING LIKES FOR ${blog.title} by ${blog.author}`})
 			setTimeout(()=>{dispatch({type: 'SET_MESSAGE', rmessage:''})},5000)
 		}
-		
-
-
-		//dispatch update
-		//show error if error
 	}
 }
-//test this later if we move posting blog to reducer
-// export const addBlog = (blogData, token) => {
-// 	return async dispatch => {
-// 		const blog = await blogService.postBlog(blogData, token)
-// 		dispatch({type: 'ADD_BLOG', data: blog})
-// 	}
-// }
+
 
 export default blogReducer
