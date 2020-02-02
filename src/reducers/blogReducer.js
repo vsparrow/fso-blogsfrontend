@@ -26,7 +26,6 @@ export const initializeBlogs = ()=>{
 	}
 }
 
-// export const addBlog = blog => dispatch => dispatch({type: 'ADD_BLOG', data: blog})
 export const addBlog = (blogData, token) => {
 	return async dispatch => {
 		try{
@@ -61,7 +60,7 @@ export const updateLikes = (blog,token) => {
 		try{
 			const returnedBlog = await blogService.updateBlog(updatedBlog, token)
 			console.log('returnedBlog is', returnedBlog)
-			dispatch({type: 'UPDATE_LIKES', data: blog.id}) // <-------------------------------------------------------
+			dispatch({type: 'UPDATE_LIKES', data: blog.id})
 		} catch(error){
 			console.log(error)
 			dispatch({type: 'SET_MESSAGE', rmessage: `ERROR UPDATING LIKES FOR ${blog.title} by ${blog.author}`})
